@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_content %}
+    <div class="mt-5 pt-5 custom-shadow rounded" style="background-color: #4d5154">
+	    <h2 class="m-2 center-text text-white"><strong></strong></h2>
+        <pre class="m-2 p-2 text-white"></pre>
+    </div>
+{% endblock %}
+
+
+{% block modal_cart %}
+    {% include 'includes/cart_button.html' %}
+{% endblock %}
+
+{% block footer %}
+	<footer class="py-4 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white"></p>
+        </div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% load static %}
+{% load shop_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/bootstrap/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/my_css.css" %}">
+
+    <!-- Стиль footer-a для главной страницы -->
+    {% block main_page_footer_css_style %}{% endblock %}
+    <!-- Favicons for different platforms -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "favicon/apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "favicon/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "favicon/favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "favicon/site.webmanifest" %}">
+
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'main:index' %}">На головну</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Информація
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item  text-white" href="{% url 'main:delivery_and_payment' %}">Доставка и оплата</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url 'main:contacts' %}">Контактна информація</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url 'main:about' %}">Про нас</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  text-white" href="{% url 'user:user-cart' %}">Корзина</a>
+                        </li>
+                        {% if not user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link  text-white" href="{% url 'user:login' %}">Увійти</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle text-white" href="{% url 'user:profile' %}" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Мій профіль
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item  text-white" href="{% url 'user:user-cart' %}">Корзина</a></li>
+                                    <li><a class="dropdown-item  text-white" href="{% url 'user:profile' %}">Особовий кабінет</a>
+                                    </li>
+                                    {% if user.is_admin or user.is_superuser or user.is_staff %}
+                                        <li><a class="dropdown-item  text-white" href="{% url 'admin:index' %}">Адмін панель</a></li>
+                                    {% endif %}
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item  text-white" href="{% url 'user:logout' %}">Вийти</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <form class="d-flex" role="search" action="{% url 'shop:search' %}" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Введіть для пошуку" aria-label="Search" name="q">
+                        <button class="btn btn-outline-success text-white" type="submit">Пошук</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="container">
+            <!-- Каталог и корзина с фиксированным расположением на странице -->
+            <div class="row mt-1 position-fixed z-3">
+                <!-- Каталог -->
+                <div class="dropdown mb-2">
+                    <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Каталог
+                        <img class="mx-1" src="{% static 'icons/grid-fill.svg' %}" alt="Catalog Icon" width="16"
+                            height="16">
+                    </button>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url 'shop:products' category.slug %}">{{ category.category_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- Значек корзины, вызывает модальное окно -->
+          {% block modal_cart %}
+          {% endblock %}
+                <!-- Закончилась разметка модального окна -->
+            </div>
+        </div>
+
+
+        <!-- Контент -->
+        <div class="container">
+            <div class="row mt-1">
+                <div class="col-lg-2">
+                    <!-- Пустой блок на Ваше усмотрение -->
+                </div>
+                <div class="col-lg-10">
+                    <!-- Контент на странице -->
+                    {% include 'includes/notifications.html' %}
+                    {% block page_content %}{% endblock %}
+                    {% block  pagination %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% block footer %}{% endblock %}
+
+    <script src="{% static "js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "js/jquery-events.js" %}"></script>
+    <script src="{% static "js/jquery-ajax.js" %}"></script>
+    <script src="{% static "js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+</body>
+
+</html>

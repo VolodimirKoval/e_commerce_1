@@ -1,0 +1,21 @@
+# Ignore the Django migrations
+*/migrations/
+
+# Ignore the SQLite database file
+db.sqlite3
+
+# Ignore the environment settings
+.env
+
+# Ignore compiled python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ignore virtual environment folder
+venv/

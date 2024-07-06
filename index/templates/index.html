@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_page_footer_css_style %}
+	<link rel="stylesheet" href="{% static "css/my_footer_css.css" %}">
+{% endblock %}
+
+{% block page_content %}
+	<h1 class="mt-5 pt-5"><strong></strong></h1>
+{% endblock %}
+
+
+{% block modal_cart %}
+    {% include 'includes/cart_button.html' %}
+{% endblock %}
+
+
+{% block footer %}
+	<footer class="py-4 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white"></p>
+        </div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,58 @@
+[
+{
+    "model": "shop.category",
+    "pk": 1,
+    "fields": {
+        "category_name": "Кухня",
+        "slug": "kuhnya"
+    }
+},
+{
+    "model": "shop.category",
+    "pk": 2,
+    "fields": {
+        "category_name": "Спальня",
+        "slug": "spalnya"
+    }
+},
+{
+    "model": "shop.category",
+    "pk": 3,
+    "fields": {
+        "category_name": "Вітальня",
+        "slug": "vitalnya"
+    }
+},
+{
+    "model": "shop.category",
+    "pk": 4,
+    "fields": {
+        "category_name": "Офіс",
+        "slug": "ofis"
+    }
+},
+{
+    "model": "shop.category",
+    "pk": 5,
+    "fields": {
+        "category_name": "Фурнітура",
+        "slug": "furnitura"
+    }
+},
+{
+    "model": "shop.category",
+    "pk": 6,
+    "fields": {
+        "category_name": "Декор",
+        "slug": "dekor"
+    }
+},
+{
+    "model": "shop.category",
+    "pk": 7,
+    "fields": {
+        "category_name": "Всі товари",
+        "slug": "all"
+    }
+}
+]
